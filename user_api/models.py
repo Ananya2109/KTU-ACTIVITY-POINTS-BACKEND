@@ -29,7 +29,10 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     user_id = models.AutoField(primary_key=True)
     email =  models.EmailField(max_length=50, unique=True)
     username = models.CharField(max_length=50)
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'email' 
+    #Django's authentication system requires a unique username to identify a user. 
+    # However, in this case, the email field is used as the unique identifier for the user instead of the 
+    # username field. This is specified by setting USERNAME_FIELD = 'email' in the AppUser model.
     REQUIRED_FIELDS = ['username']
     objects = AppUserManager()
     def __str__(self):
