@@ -3,10 +3,11 @@ from django.contrib.auth import get_user_model, login, logout
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer, RegisterFacultySerializer
+from .serializers import UserModel, UserRegisterSerializer, UserLoginSerializer, UserSerializer, RegisterFacultySerializer, ViewAllFacultySerializer
 from rest_framework import permissions, status
 from .validations import custom_validation, validate_email, validate_password
-
+from .models import AppUser
+from rest_framework import generics
 
 class UserRegister(APIView):
 	permission_classes = (permissions.AllowAny,)
@@ -66,3 +67,21 @@ class RegisterFaculty(APIView):
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class ViewAllFaculty(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (SessionAuthentication,)
+    
+    queryset = UserModel.objects.filter(role='faculty')
+    serializer_class = ViewAllFacultySerializer
+
+
+# class FacultyLogin(APIView):
+	
+
+# class FacultyLogout(APIView):
+
+# class RegisterStudent(APIView):
+
+# class ViewAllStudents(generics.ListAPIView):
+
+    
