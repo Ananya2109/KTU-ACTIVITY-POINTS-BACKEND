@@ -13,6 +13,24 @@
 "role":"admin"
 }
 
+{
+"email":"admin4@gmail.com",
+"username":"admin4",
+"password":"admin12345"
+}
+
+{
+"email":"admin5@gmail.com",
+"username":"admin5",
+"password":"admin12345"
+}
+
+{
+"email":"admin6@gmail.com",
+"username":"admin6",
+"password":"admin12345",
+"role":"admin"
+}
 #FACULTY CREDENTIALS
 
 {
@@ -32,4 +50,22 @@
 "username": "faculty8",
 "password":"reg_no_8",
 }
+{
+"email":"faculty10@gmail.com",
+"username":"faculty10",
+"password":"reg_no_10",
+}
+{
+"email":"faculty11@gmail.com",
+"username":"faculty11",
+"password":"reg_no_1",
+}
 
+
+
+#STUDENT CREDENTIALS
+{
+"email":"student1@gmail.com",
+"username":"student1",
+"password":"reg_no_1"
+}

@@ -43,3 +43,65 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     objects = AppUserManager()
     def __str__(self):
 	    return self.username
+
+
+class Student(models.Model):
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+    class_detail = models.ForeignKey('ClassDetail', on_delete=models.CASCADE)
+    point_scored = models.IntegerField(default=0)
+
+class ClassDetail(models.Model):
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+    branch = models.ForeignKey('Branch', on_delete=models.CASCADE)
+    grad_year = models.ForeignKey('GraduationYear', on_delete=models.CASCADE)
+
+class Certificate(models.Model):
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+    certificate_approval_status = models.ForeignKey('Status', on_delete=models.CASCADE)
+    activity_point_details = models.ForeignKey('ActivityPoint', on_delete=models.CASCADE)
+
+class ActivityPoint(models.Model):
+    type = models.CharField(max_length=255)
+    point_alloted = models.IntegerField()
+
+class PendingRequest(models.Model):
+    certificate = models.ForeignKey(Certificate, on_delete=models.CASCADE)
+    student_user = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='pending_requests')
+    faculty = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+    grad_year = models.ForeignKey('GraduationYear', on_delete=models.CASCADE)
+    branch = models.ForeignKey('Branch', on_delete=models.CASCADE)
+    status = models.ForeignKey('Status', on_delete=models.CASCADE)
+
+class Branch(models.Model):
+    BRANCH_CHOICES = [
+        ('csa', 'CSA'),
+        ('csb', 'CSB'),
+        ('csc', 'CSC'),
+        ('csbs', 'CSBS'),
+        ('eca', 'ECA'),
+        ('ecb', 'ECB'),
+        ('eee', 'EEE'),
+        ('ebe', 'EBE'),
+        ('mech', 'MECH'),
+    ]
+    branch = models.CharField(max_length=255, choices=BRANCH_CHOICES)
+
+class GraduationYear(models.Model):
+    grad_year_choice = [
+        ('2024','2024'),
+        ('2025','2025'),
+        ('2026','2026'),
+        ('2027','2027'),
+        ('2028','2028'),
+        ('2029','2029'),
+        ('2030','2030'),
+    ]
+    grad_year = models.CharField(max_length=255, choices=grad_year_choice)
+
+class Status(models.Model):
+    STATUS_CHOICES = [
+        ('approved','Approved'),
+        ('pending','Pending'),
+        ('rejected','Rejected'),
+    ]
+    status = models.CharField(max_length=255, choices=STATUS_CHOICES)

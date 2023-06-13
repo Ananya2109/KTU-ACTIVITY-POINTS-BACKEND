@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'user_api.apps.UserApiConfig',
     'home.apps.HomeConfig',
     'rest_framework.authtoken',
+    'rest_framework_swagger',
     
 ]
 AUTH_USER_MODEL = 'user_api.AppUser'
@@ -57,6 +58,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
     ),
+    'DEFAULT_SCHEMA_CLASS':('rest_framework.schemas.coreapi.AutoSchema'),
+
 }
 
 MIDDLEWARE = [
@@ -83,8 +86,13 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+            
             ],
+            'libraries': {  
+                    'staticfiles': 'django.templatetags.static',
+                 },
         },
+        
     },
 ]
 
