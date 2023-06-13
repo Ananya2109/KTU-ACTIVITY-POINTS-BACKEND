@@ -85,6 +85,8 @@ class Branch(models.Model):
         ('mech', 'MECH'),
     ]
     branch = models.CharField(max_length=255, choices=BRANCH_CHOICES)
+    def __str__(self):
+        return self.branch
 
 class GraduationYear(models.Model):
     grad_year_choice = [
@@ -97,6 +99,8 @@ class GraduationYear(models.Model):
         ('2030','2030'),
     ]
     grad_year = models.CharField(max_length=255, choices=grad_year_choice)
+    def __str__(self):
+        return self.grad_year
 
 class Status(models.Model):
     STATUS_CHOICES = [
@@ -105,3 +109,5 @@ class Status(models.Model):
         ('rejected','Rejected'),
     ]
     status = models.CharField(max_length=255, choices=STATUS_CHOICES)
+    def __str__(self):
+        return self.status

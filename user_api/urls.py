@@ -19,6 +19,8 @@ urlpatterns = [
 	path('register-student', views.RegisterStudent.as_view(), name='register-student'),
 	path('view-students', views.ViewAllStudent.as_view(), name='view-student'),
 	path('student-login', views.StudentLogin.as_view(), name='student-login'),
+	path('branches', views.Branches.as_view(),name='branches'),
+	path('gradyear', views.GradYear.as_view(),name='gradyear'),
 	
 ]
 	

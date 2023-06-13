@@ -81,3 +81,13 @@ class ViewAcitvityPointsSerializer(serializers.ModelSerializer):
 		model = models.ActivityPoint
 		fields = '__all__'
 
+class BranchesSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = models.Branch
+		fields = '__all__'
+
+class GraduationYearSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = models.GraduationYear
+		fields = '__all__'
+
