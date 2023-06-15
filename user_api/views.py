@@ -149,7 +149,7 @@ class RegisterStudent(APIView):
             user_obj.role = 'student'
             print(user_obj)
             user_obj.save()
-            student_obj = Student.objects.create(user = user_obj ,class_detail= faculty_class_details)
+            student_obj = Student.objects.create(user = user_obj,class_detail= faculty_class_details)
             student_obj.save()
             if user_obj:
                return Response(serializer.data, status=status.HTTP_201_CREATED)
