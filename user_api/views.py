@@ -42,7 +42,6 @@ class UserLogin(APIView):
 
             return Response({'user_id':user.user_id}, status=status.HTTP_200_OK)
     
-
 class UserLogout(APIView):
     permission_classes = (permissions.AllowAny,)
     authentication_classes = ()
@@ -150,6 +149,8 @@ class RegisterStudent(APIView):
             user_obj.role = 'student'
             print(user_obj)
             user_obj.save()
+            student_obj = Student.objects.create(user = user_obj ,class_detail= faculty_class_details)
+            student_obj.save()
             if user_obj:
                return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

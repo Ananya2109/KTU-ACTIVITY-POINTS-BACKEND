@@ -64,8 +64,10 @@
 
 
 #STUDENT CREDENTIALS
-{
+{ "14"
 "email":"student1@gmail.com",
 "username":"student1",
 "password":"reg_no_1"
 }
+
+6
