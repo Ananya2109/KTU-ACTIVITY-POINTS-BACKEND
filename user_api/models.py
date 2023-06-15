@@ -1,3 +1,4 @@
+from pyexpat import model
 from urllib.request import AbstractBasicAuthHandler
 from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
@@ -15,14 +16,16 @@ class AppUserManager(BaseUserManager):
         user.save()
         return user
     
-    def create_superuser(self, email, password = None):
+    def create_superuser(self, email,username,role, password = None):
         if not email:
             raise ValueError("An email is required.")
         if not password:
             raise ValueError("A password is required.")
         user = self.create_user(email, password)
+        user.username = username
         user.is_superuser = True
         user.is_staff = True
+        user.role = 'admin'
         user.save()
         return user
 
@@ -35,6 +38,7 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     user_id = models.AutoField(primary_key=True)
     email = models.EmailField(max_length=50, unique=True)
     username = models.CharField(max_length=50)
+    is_staff = models.BooleanField(default=False)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES,default='')
     USERNAME_FIELD = 'email' 
     #Django's authentication system requires a unique username to identify a user. 
@@ -43,18 +47,26 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['username','role']
     objects = AppUserManager()
     def __str__(self):
-	    return self.username
+        return self.username
+    
+    # @property
+    # def is_staff(self):
+    #     return False
 
 
 class Student(models.Model):
     user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     class_detail = models.ForeignKey('ClassDetail', on_delete=models.CASCADE)
     point_scored = models.IntegerField(default=0)
+    def __str__(self):
+        return self.user.username
 
 class ClassDetail(models.Model):
     user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     branch = models.ForeignKey('Branch', on_delete=models.CASCADE)
     grad_year = models.ForeignKey('GraduationYear', on_delete=models.CASCADE)
+    def __str__(self):
+        return self.user.username
 
 class Certificate(models.Model):
     user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
@@ -64,6 +76,21 @@ class Certificate(models.Model):
 class ActivityPoint(models.Model):
     type = models.CharField(max_length=255)
     point_alloted = models.IntegerField()
+    Level_CHOICES = [ 
+        ('I','I'),
+        ('II','II'),
+        ('III','III'),
+        ('IV','IV'),
+        ('V','V')
+    ]
+    Achievemet_Type_CHOICES = [ 
+        ('Participation','Participation'),
+        ('First Prize','First Prize'),
+        ('Second Prize','Second Prize'),
+        ('Third Prize','Third Prize')
+    ]
+    def __str__(self):
+        return self.type
 
 class PendingRequest(models.Model):
     certificate = models.ForeignKey(Certificate, on_delete=models.CASCADE)

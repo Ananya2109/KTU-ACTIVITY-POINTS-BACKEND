@@ -172,8 +172,8 @@ class StudentLogin(APIView):
             return Response({'user_id':user.user_id}, status=status.HTTP_200_OK)
           
 class ViewAllStudent(generics.ListAPIView):
-    
-    queryset = UserModel.objects.filter(role='student')
+    permission_classes = (permissions.AllowAny,)
+    queryset = Student.objects.all()
     serializer_class = ViewAllStudentSerializer
 
     

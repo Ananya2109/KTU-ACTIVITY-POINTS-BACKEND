@@ -50,6 +50,9 @@ INSTALLED_APPS = [
     
 ]
 AUTH_USER_MODEL = 'user_api.AppUser'
+AUTHENTICATION_BACKENDS = (
+    ('django.contrib.auth.backends.ModelBackend'),
+)
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (

@@ -47,7 +47,7 @@ class FacultyUserSerializer(serializers.ModelSerializer):
 
 class ViewAllStudentSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = UserModel 
+		model = models.Student 
 		fields = '__all__'
 
 
