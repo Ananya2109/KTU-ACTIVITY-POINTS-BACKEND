@@ -83,12 +83,14 @@ class ActivityPoint(models.Model):
         ('IV','IV'),
         ('V','V')
     ]
+    Level = models.CharField(max_length=25, choices=Level_CHOICES)
     Achievemet_Type_CHOICES = [ 
         ('Participation','Participation'),
         ('First Prize','First Prize'),
         ('Second Prize','Second Prize'),
         ('Third Prize','Third Prize')
     ]
+    Achievemet_Type = models.CharField(max_length=255, choices=Achievemet_Type_CHOICES)
     def __str__(self):
         return self.type
 
