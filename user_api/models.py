@@ -72,6 +72,7 @@ class Certificate(models.Model):
     user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     certificate_approval_status = models.ForeignKey('Status', on_delete=models.CASCADE)
     activity_point_details = models.ForeignKey('ActivityPoint', on_delete=models.CASCADE)
+    uploaded_file = models.FileField(upload_to='certificates/',null=True, default=None)  # Added attribute for file upload
 
 class ActivityPoint(models.Model):
     type = models.CharField(max_length=255)
