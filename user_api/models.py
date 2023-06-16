@@ -1,5 +1,6 @@
 from pyexpat import model
 from urllib.request import AbstractBasicAuthHandler
+from wsgiref.simple_server import demo_app
 from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
@@ -82,7 +83,8 @@ class ActivityPoint(models.Model):
         ('II','II'),
         ('III','III'),
         ('IV','IV'),
-        ('V','V')
+        ('V','V'),
+        ('N/A','N/A')
     ]
     Level = models.CharField(max_length=25, choices=Level_CHOICES)
     Achievemet_Type_CHOICES = [ 
