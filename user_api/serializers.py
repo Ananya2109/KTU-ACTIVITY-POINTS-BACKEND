@@ -61,12 +61,23 @@ class RegisterStudentSerializer(serializers.ModelSerializer):
 class StudentLoginSerializer(serializers.Serializer):
 	email = serializers.EmailField()
 	password = serializers.CharField()
+
    
 class ViewAllCertificatesSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = models.Certificate
 		fields = '__all__'
-	
+	   
+class ViewAllStatusSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = models.Status
+		fields = '__all__'
+  
+class PendingRequestActionSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = models.PendingRequest
+		fields = '__all__'
+
 class ViewPendingRequestsSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = models.PendingRequest

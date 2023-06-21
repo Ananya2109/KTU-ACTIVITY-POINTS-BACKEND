@@ -13,7 +13,9 @@ urlpatterns = [
 	path('faculty-view', views.FacultyView.as_view(), name='faculty-view'),
 	path('student', views.ViewAllStudent.as_view(), name='student'),
 	path('certificate', views.UploadCertificate.as_view(), name='certificate'),
-	path('pending-request', views.ViewPendingRequests.as_view(), name='pending-request'),
+	# path('certificate_detail', views.UploadCertificateDetail.as_view(), name='Upload Certificate'),
+	path('view-pending-request', views.ViewPendingRequests.as_view(), name='pending-request'),
+ 	path('pending-request-action', views.PendingRequestAction.as_view(), name='pending-request'),
 	path('class-details', views.ViewClassDetails.as_view(), name='class-details'),
 	path('activity-points', views.ViewActivityPoints.as_view(), name='activity-points'),
 	path('register-student', views.RegisterStudent.as_view(), name='register-student'),
@@ -21,6 +23,7 @@ urlpatterns = [
 	path('student-login', views.StudentLogin.as_view(), name='student-login'),
 	path('branches', views.Branches.as_view(),name='branches'),
 	path('gradyear', views.GradYear.as_view(),name='gradyear'),
+ 	path('certificate-status', views.CertificateStatus.as_view(),name='gradyear'),
 	
 ]
 	
