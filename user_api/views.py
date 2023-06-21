@@ -104,10 +104,46 @@ class FacultyLogin(APIView):
             user = authenticate(username=data['email'], password=data['password'])
             if not user:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-            
+
             return Response({'user_id':user.user_id}, status=status.HTTP_200_OK)
     
+class UploadCertificate(APIView):
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = (SessionAuthentication,)
+    serializer_class = ViewAllCertificatesSerializer
 
+    def post(self,request):
+        data = json.loads(request.body.decode('utf-8'))
+        #uploaded_file = request.FILES.get('file')
+        print(request.FILES.get('file'))
+        print(request.FILES.get('user'))
+        print(request.FILES.get('activity_type'))
+        user = UserModel.objects.get(user_id = data['user_id'])
+        activity_type = ActivityPoint.objects.get(type = data['type'], Level = data['Level'], Achievement_Type = data['Achievemen_Type'])
+        uploaded_file = request.FILES.get('file')
+        
+        cert_obj = Certificate.objects.create(
+            user=user,
+            activity_point_details = activity_type,
+            uploaded_file = uploaded_file,
+            certificate_approval_status = 'pending'
+        )
+        cert_obj.save()
+
+        serializer = ViewAllCertificatesSerializer(data=data)
+        if cert_obj:
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
+# user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+#     certificate_approval_status = models.ForeignKey('Status', on_delete=models.CASCADE)
+#     activity_point_details = models.ForeignKey('ActivityPoint', on_delete=models.CASCADE)
+#     uploaded_file = models.FileField(upload_to='certificates/',null=True, default=None)  # Added attribute for file upload
 
 class FacultyLogout(APIView):
     permission_classes = (permissions.AllowAny,)
@@ -173,19 +209,23 @@ class StudentLogin(APIView):
           
 class ViewAllStudent(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
+
+    def get(self, request):
+        data = request.data
+
     queryset = Student.objects.all()
     serializer_class = ViewAllStudentSerializer
 
     
-class ViewAllCertificates(generics.ListAPIView):
-    queryset = Certificate.objects.all()
-    serializer_class = ViewAllCertificatesSerializer
-    def post(self, request):
-        clean_data = custom_validation(request.data)
-        serializer = ViewAllCertificatesSerializer(data=clean_data)
-        if serializer.is_valid(raise_exception=True):
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# class ViewAllCertificates(generics.ListAPIView):
+#     queryset = Certificate.objects.all()
+#     serializer_class = ViewAllCertificatesSerializer
+#     def post(self, request):
+#         clean_data = custom_validation(request.data)
+#         serializer = ViewAllCertificatesSerializer(data=clean_data)
+#         if serializer.is_valid(raise_exception=True):
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ViewPendingRequests(generics.ListAPIView):

@@ -40,6 +40,7 @@ class FacultyLoginSerializer(serializers.Serializer):
 	##
 	
 
+
 class FacultyUserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = UserModel
