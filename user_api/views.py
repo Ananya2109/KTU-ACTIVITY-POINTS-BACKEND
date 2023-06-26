@@ -116,6 +116,10 @@ class UploadCertificate(APIView):
     authentication_classes = (SessionAuthentication,)
     serializer_class = ViewAllCertificatesSerializer
     parser_classes = [MultiPartParser, FormParser]
+    def get(self, request):
+        serializer = ViewAllCertificatesSerializer(Certificate.objects.all(), many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
     def post(self,request):
         #data = json.loads(request.body.decode('utf-8'))
         #uploaded_file = request.FILES.get('file')
@@ -152,7 +156,7 @@ class UploadCertificate(APIView):
         pending_request_object = PendingRequest.objects.create(
             certificate = cert_obj,
             student_user = user,
-            faculty  = student_object.user,
+            faculty  = student_object.class_detail.user,
             grad_year = student_object.class_detail.grad_year,
             branch =  student_object.class_detail.branch,
             status = certificate_approval_status
